@@ -1,18 +1,12 @@
-require('dotenv').config();
+require('dotenv').config()  
 
 const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const hostname = process.env.HOST;  
 const port = process.env.PORT;
-
-mongoose.connect(`mongodb://${hostname}/freely`, { useNewUrlParser :true }, (err, connection) => {
-  if(err) throw err;
-  else console.log('conntection established');
-})
 
 app.use(cors());
 
@@ -43,8 +37,6 @@ if(process.env.NODE_ENV === "development"){
 
 
 app.use(require('./server/routes/index'));
-
-// app.use("/api", require('./server/routes/api/api'));
 
 app.listen(port, () => {
   console.log(`app is runing on http://${hostname}:${port}/`)

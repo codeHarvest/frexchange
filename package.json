@@ -1,14 +1,8 @@
 {
   "name": "frexchange",
   "version": "1.0.0",
-  "description": "Frexchange is a ecommerce sight that follow barter sytem is build on react node mongodb",
+  "description": "",
   "main": "app.js",
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ]
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "create": "webpack",
