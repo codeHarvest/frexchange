@@ -5,8 +5,16 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+// const passport = require('passport');
+const mongoose = require('mongoose');
+
 const hostname = process.env.HOST;  
 const port = process.env.PORT;
+
+mongoose.connect(`mongodb://${hostname}/frexchange`, { useNewUrlParser : true }, (err,connection) => {
+  if(err) throw err;
+  else console.log(connection,'connection established');
+} )
 
 app.use(cors());
 
@@ -35,6 +43,9 @@ if(process.env.NODE_ENV === "development"){
   app.use(require("webpack-hot-middleware")(compiler));
 }
 
+app.use('/api', require('./server/routes/api/api'));
+
+// require('./server/modules/passport')(passport);
 
 app.use(require('./server/routes/index'));
 
