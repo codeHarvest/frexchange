@@ -30,3 +30,24 @@ exports.registerUser = (req,res) => {
         res.json(user);
     })
 }
+
+exports.loginUser = function(req,res,next){
+    passport.authenticate('local', function(err,user,info){
+        if(err) {
+            return next(err) 
+        }
+        if(!user){
+            return res.redirect('/login');
+        }
+        req.logIn(user, function(err){
+            if(err){
+                return res.redirect('/login');
+            }else{
+                return res.json({
+                    sucess: true,
+                    user
+                }).redirect("/");
+            }
+        })
+    })(req,res,next);
+}
