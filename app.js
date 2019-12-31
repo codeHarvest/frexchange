@@ -5,7 +5,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const passport = require('passport');
+const passport = require('passport');
 const mongoose = require('mongoose');
 
 const hostname = process.env.HOST;  
@@ -43,9 +43,12 @@ if(process.env.NODE_ENV === "development"){
   app.use(require("webpack-hot-middleware")(compiler));
 }
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/api', require('./server/routes/api/api'));
 
-// require('./server/modules/passport')(passport);
+require('./server/modules/passport')(passport);
 
 app.use(require('./server/routes/index'));
 
