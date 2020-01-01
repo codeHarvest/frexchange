@@ -46,11 +46,12 @@ if(process.env.NODE_ENV === "development"){
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api', require('./server/routes/api/api'));
-
 require('./server/modules/passport')(passport);
 
 app.use(require('./server/routes/index'));
+
+app.use('/api', require('./server/routes/api/api'));
+
 
 app.listen(port, () => {
   console.log(`app is runing on http://${hostname}:${port}/`)

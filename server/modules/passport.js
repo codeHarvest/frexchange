@@ -31,4 +31,29 @@ module.exports = function(passport){
             })
         })
     }))
+
+    passport.use(new GoogleStrategy({
+        clientID : '',
+        clientSecret: '',
+        callbackURL: 'http://localhost:8888/auth/google/callback'
+    },
+        function(accessToken,refreshToken,profile,done){
+            User.findOne({googleId: profile.id }, (err,user) => {
+                if(err) return done(err);
+                if(!user){
+
+                    const user = new user({
+                        googleAuthToken: accessToken,
+                        googleId: profile.id,
+                        name: profile.displayName,
+                        email: profile.emails[0].value
+                    })
+                    user.save((err,user) => {
+                        if(err) throw err;
+                        return done(null,user);
+                    })
+                }
+            })
+        }
+    ))
 }

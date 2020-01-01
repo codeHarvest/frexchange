@@ -42,7 +42,7 @@ userSchema.methods.comparePassword = function(userPassword, cb){
         if(err){
             return cb(err, false);
         }
-        return cb(null,isMatch);
+        return cb(null, isMatch);
     })
 }
 

@@ -33,6 +33,7 @@ exports.registerUser = (req,res) => {
 
 exports.loginUser = function(req,res,next){
     passport.authenticate('local', function(err,user,info){
+       console.log(user, 'in user controller');
         if(err) {
             return next(err) 
         }
@@ -44,7 +45,7 @@ exports.loginUser = function(req,res,next){
                 return res.redirect('/login');
             }else{
                 return res.json({
-                    sucess: true,
+                    success: true,
                     user
                 }).redirect("/");
             }
