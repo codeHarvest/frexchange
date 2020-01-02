@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const localStrategy = require('passport-local').Strategy;
+// const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const User = require('../models/user');
 
 
@@ -32,28 +33,28 @@ module.exports = function(passport){
         })
     }))
 
-    passport.use(new GoogleStrategy({
-        clientID : '',
-        clientSecret: '',
-        callbackURL: 'http://localhost:8888/auth/google/callback'
-    },
-        function(accessToken,refreshToken,profile,done){
-            User.findOne({googleId: profile.id }, (err,user) => {
-                if(err) return done(err);
-                if(!user){
+    // passport.use(new GoogleStrategy({
+    //     clientID : process.env.clientID,
+    //     clientSecret: process.env.clientSecret,
+    //     callbackURL: 'http://localhost:8888/auth/google/callback'
+    // },
+    //     function(accessToken,refreshToken,profile,done){
+    //         User.findOne({googleId: profile.id }, (err,user) => {
+    //             if(err) return done(err);
+    //             if(!user){
 
-                    const user = new user({
-                        googleAuthToken: accessToken,
-                        googleId: profile.id,
-                        name: profile.displayName,
-                        email: profile.emails[0].value
-                    })
-                    user.save((err,user) => {
-                        if(err) throw err;
-                        return done(null,user);
-                    })
-                }
-            })
-        }
-    ))
+    //                 const user = new user({
+    //                     googleAuthToken: accessToken,
+    //                     googleId: profile.id,
+    //                     name: profile.displayName,
+    //                     email: profile.emails[0].value
+    //                 })
+    //                 user.save((err,user) => {
+    //                     if(err) throw err;
+    //                     return done(null,user);
+    //                 })
+    //             }
+    //         })
+    //     }
+    // ))
 }

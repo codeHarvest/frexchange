@@ -35,11 +35,12 @@ exports.loginUser = function(req,res,next){
     passport.authenticate('local', function(err,user,info){
        console.log(user, 'in user controller');
         if(err) {
-            return next(err) 
+            return next(err);
         }
         if(!user){
             return res.redirect('/login');
         }
+        console.log('in loginUser')
         req.logIn(user, function(err){
             if(err){
                 return res.redirect('/login');
