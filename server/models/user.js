@@ -21,6 +21,8 @@ const userSchema = new schema({
     }
 });
 
+
+
 userSchema.pre('save', function(next){
     var password = this.password;
     var self = this;

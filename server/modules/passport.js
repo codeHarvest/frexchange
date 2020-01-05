@@ -7,12 +7,10 @@ const User = require('../models/user');
 
 module.exports = function(passport){
     passport.serializeUser(function(user,done){
-        // console.log('serializeUser');
         done(null, user._id);
       });
     
       passport.deserializeUser(function (id, done){
-        // console.log('deserializeUser');
         User.findById(id, function(err, user){
           done(err,user);
         })
@@ -24,10 +22,12 @@ module.exports = function(passport){
             if(err){
               return done(err)
             };
-            if(!isMatch){
+            if(!user){
               return done(null,false);
             }
-            // console.log(user,"in passport.js")
+            if(user.password != password){
+                return done(null,false);
+            }
               return done(null,user);
             })
           })      
