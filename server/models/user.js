@@ -21,31 +21,6 @@ const userSchema = new schema({
   }
 });
 
-userSchema.pre('save', function(next){
-  var password = this.password;
-  var self = this;
-  console.log('debug1',this, this.password, this.isModified(this.password));
-
-  if(this.isModified(this.password)) return next();
-
-  bcrypt.genSalt(saltRounds, function(err, salt) {
-    bcrypt.hash(password, salt, function(err, hash) {
-        self.password = hash;
-        next();
-      });
-    });
-});
-
-userSchema.methods.comparePassword = function(userPassword, cb){
-  bcrypt.compare(userPassword, this.password, function(err,isMatch){
-    console.log(isMatch, "on 74 user scehma")
-    if(err) {
-      return cb(err, false);
-    }
-    return cb(null, isMatch);
-  });
-}
-
 
 const user = mongoose.model('User', userSchema);
 
